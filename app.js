@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 // URL-encoded 형식의 요청 본문을 파싱합니다.
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const mongoURI = 'mongodb://localhost:27017/mydatabase';
+const mongoURI = 'mongodb://localhost:27017/biofdnc-hub';
 
 // MongoDB 연결 설정
 // 실제 사용 시 환경 변수나 설정 파일에서 URL을 가져오는 것이 좋습니다.
@@ -29,8 +29,12 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.log('MongoDB connection error:', err));
 
+// API 라우트를 '/api' 경로에 연결
+const apiRoutes = require('./src/app/api/index');
+app.use('/api', apiRoutes);
+
 // 포트 번호를 설정합니다.
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 // 지정된 포트에서 서버를 시작하고 리스닝을 시작합니다.
 // Express는 Node.js의 http 모듈을 추상화하여 서버 설정을 간소화합니다.
